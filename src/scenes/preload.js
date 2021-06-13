@@ -10,7 +10,9 @@ class Preload extends Phaser.Scene {
 
 		// characters
 		this.load.image('ChestMan', 'assets/Fly_Guy_Torso-removebg-preview.png');
-		this.load.image('LegMan', 'assets/Leg_Man-removebg-preview.png');
+		this.load.spritesheet('LegMan', 'assets/Leg_Run.png', {
+			frameWidth: 120, frameHeight: 150
+		})
 		
 		this.load.image('ball', 'assets/ball.png');
 		

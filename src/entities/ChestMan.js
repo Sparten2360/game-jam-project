@@ -48,13 +48,14 @@ class ChestMan extends Phaser.Physics.Arcade.Sprite {
 		if (left.isDown) {
 			this.setVelocityX(-this.ChestManSpeed);
 			console.log('a');
-			this.setFlipX(true);
+			this.rotation = -.5;
 		} else if (right.isDown) {
 			this.setVelocityX(this.ChestManSpeed);
-			this.setFlipX(false)
+			this.rotation = .5;
 			console.log('d')
 		} else {
 			this.setVelocityX(0);
+			this.rotation = 0;
 		}
 
 		// jump with up arrow

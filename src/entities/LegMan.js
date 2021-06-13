@@ -20,6 +20,20 @@ class LegMan extends Phaser.Physics.Arcade.Sprite {
 
 		this.body.setGravityY(this.gravity);
 		//this.setCollideWorldBounds(true);
+
+		this.anims.create({
+			key: 'walk',
+			frames: this.anims.generateFrameNumbers('LegMan', { frames: [ 0, 1, 2, 3, 4, 5] }),
+			frameRate: 8,
+			repeat: -1
+		    });
+
+		    this.anims.create({
+			key: 'idle',
+			frames: this.anims.generateFrameNumbers('LegMan', { frames: [3] }),
+			frameRate: 8,
+			repeat: -1
+		    });
 		}
 
 	initEvents() {
@@ -27,7 +41,7 @@ class LegMan extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	update() {
-		this.setScale(.15);
+		this.setScale(1);
 
 		this.keys = this.scene.input.keyboard.addKeys("W,A,S,D");
 		const onFloor = this.body.onFloor();
@@ -43,6 +57,14 @@ class LegMan extends Phaser.Physics.Arcade.Sprite {
 		} else {
 			this.setVelocityX(0);
 		}
+
+		if(this.body.velocity.x == 0){
+			this.play('walk')
+		}
+		else{
+			this.stop;
+		}
+		
 		
 		// flying
 		if (this.keys.W.isDown && onFloor) {

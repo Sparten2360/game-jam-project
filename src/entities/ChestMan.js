@@ -1,4 +1,5 @@
-import Phaser, { DOWN } from 'phaser';
+import Phaser from 'phaser';
+import Projectile from '../attacks/Projectile';
 
 class ChestMan extends Phaser.Physics.Arcade.Sprite {
 
@@ -19,10 +20,17 @@ class ChestMan extends Phaser.Physics.Arcade.Sprite {
 		this.ChestManSpeed = 200;
 		this.cursors = this.scene.input.keyboard.createCursorKeys();
 		this.previousSpeed;
+		this.setSize(this.width - 40, this.height - 45);
+
 
 		this.keys = this.scene.input.keyboard.addKeys('W,A,S,D');
 
 		this.setCollideWorldBounds(true);
+
+		this.scene.input.keyboard.on('keydown-Q', () => {
+			const projectile = new Projectile(this.scene, this.x, this.y, 'bullet');
+			projectile.fire();
+		})
 	}
 
 	initEvents() {
@@ -30,7 +38,9 @@ class ChestMan extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	update() {
-		this.setScale(.25);
+	
+
+		this.setScale(.3);
 
 		const { left, right, up, down } = this.cursors;
 
@@ -55,31 +65,11 @@ class ChestMan extends Phaser.Physics.Arcade.Sprite {
 		} else {
 			this.setVelocityY(0);
 		}
-
-
-		// move left and right
-		// if (a.isDown) {
-		// 	this.setVelocityX(-this.ChestManSpeed);
-		// 	console.log('left');
-		// 	this.setFlipX(true);
-		// } else if (d.isDown) {
-		// 	this.setVelocityX(this.ChestManSpeed);
-		// 	this.setFlipX(false)
-		// 	console.log('right');
-		// } else {
-		// 	this.setVelocityX(0);
-		// }
-
-		// // jump with up arrow
-		// if (w.isDown) {
-		// 	this.setVelocityY(-this.ChestManSpeed);
-		// 	console.log('space');
-		// } else if (s.isDown) {
-		// 	this.setVelocityY(this.ChestManSpeed);
-		// }
-
 		
-		
+	}
+
+	addCollider(otherGameObject, callback) {
+		this.scene.physics.add.collider(this, otherGameObject, callback, null, this);
 	}
 }
 

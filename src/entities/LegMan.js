@@ -16,6 +16,7 @@ class LegMan extends Phaser.Physics.Arcade.Sprite {
 		this.gravity = 800;
 		this.LegManSpeed = 200;
 		this.cursors = this.scene.input.keyboard.createCursorKeys();
+		this.setSize(this.width - 40, this.height - 60);
 
 		this.body.setGravityY(this.gravity);
 		//this.setCollideWorldBounds(true);
@@ -49,6 +50,10 @@ class LegMan extends Phaser.Physics.Arcade.Sprite {
 			console.log('w');
 		}
 		
+	}
+
+	addCollider(otherGameObject, callback) {
+		this.scene.physics.add.collider(this, otherGameObject, callback, null, this);
 	}
 }
 

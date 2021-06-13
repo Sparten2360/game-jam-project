@@ -19,6 +19,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
 		this.BasicEnemySpeed = 200;
 		this.cursors = this.scene.input.keyboard.createCursorKeys();
 		this.previousSpeed;
+		this.setSize(this.width - 40, this.height - 45);
 
 		//this.setCollideWorldBounds(true);
 
@@ -33,7 +34,7 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	update() {
-		this.setScale(1);
+		this.setScale(2);
 
 		//const { left, right, up, down } = this.cursors;
 
@@ -41,6 +42,10 @@ class BasicEnemy extends Phaser.Physics.Arcade.Sprite {
 		this.play('idle', true);
 		
 		
+	}
+
+	addCollider(otherGameObject, callback) {
+		this.scene.physics.add.collider(this, otherGameObject, callback, null, this);
 	}
 }
 

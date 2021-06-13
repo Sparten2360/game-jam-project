@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import LegMan from '../entities/LegMan';
 import ChestMan from '../entities/ChestMan';
 import BasicEnemy from '../entities/BasicEnemy';
-
 class Play extends Phaser.Scene {
 
 	constructor() {
@@ -11,23 +10,15 @@ class Play extends Phaser.Scene {
 
 	create () {
 		//this.createBG();
-		this.add.image(0,0, 'bg').setOrigin(0).setScale(3.25);
-
 		const map = this.createMap();
 		const layers = this.createLayers(map);
 
-		
 		const LegMan = this.createLegMan();
 		const ChestMan = this.createChestMan();
-		const BasicEnemy = this.createBasicEnemies(layers.enemySpawns);
+		const BasicEnemy = this.createBasicEnemy();
 
-		LegMan.addCollider(layers.platforms);
-		ChestMan.addCollider(layers.platforms);
-
-		LegMan.addCollider(ChestMan);
-
-		//BasicEnemy.addCollider(ChestMan);
-
+		this.physics.add.collider(LegMan, layers.platforms);
+		this.physics.add.collider(ChestMan, layers.platforms);
 	}
 
 	createLegMan() {
@@ -38,14 +29,15 @@ class Play extends Phaser.Scene {
 		return new ChestMan(this, 100, 10);
 	}
 
-	createBasicEnemies(spawnLayer) {
-
-		return spawnLayer.objects.map(spawnPoint => {
-			return new BasicEnemy(this, spawnPoint.x, spawnPoint.y);
-		})
-
-		
+	createBasicEnemy() {
+		return new BasicEnemy(this, 500, 20);
 	}
+	createCrossHair(){
+		return new CrossHair(this,500,20);
+	}
+
+
+
 
 	createMap() {
 		const map = this.make.tilemap({key: 'map'});
@@ -56,11 +48,10 @@ class Play extends Phaser.Scene {
 	createLayers(map) {
 		const tileset = map.getTileset('main_lev_build_1');
 		const platforms = map.createStaticLayer('platforms', tileset);
-		const enemySpawns = map.getObjectLayer('enemy_spawns');
 
 		platforms.setCollisionByExclusion(-1);
 
-		return { platforms, enemySpawns };
+		return { platforms };
 	}
 }
 
